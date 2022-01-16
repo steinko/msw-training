@@ -1,6 +1,6 @@
 stages:
   - continuose-intgeration
-  - buld
+  - build
   - acceptance-test
 
 variables:
