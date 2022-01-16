@@ -25,7 +25,9 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --record",
     "eslint": "eslint src ",
-    "start:ci": "serve --no-clipboard --listen ${PORT:-8080}"
+    "start:ci": "serve --no-clipboard --listen ${PORT:-8080}",
+    "cy:verify": "cypress verify",
+    "cy:info": "cypress info"
   },
   "eslintConfig": {
     "extends": [

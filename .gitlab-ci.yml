@@ -1,5 +1,6 @@
 stages:
   - continuose-intgeration
+  - buld
   - acceptance-test
 
 variables:
@@ -24,6 +25,20 @@ integration-test:
     - npm install
     - npm run test -- --coverage --watchAll=false
     - npm run eslint
+
+install:
+  image: cypress/base:10
+  stage: build
+
+  script:
+    - npm ci
+    # check Cypress binary path and cached versions
+    # useful to make sure we are not carrying around old versions
+    - npx cypress cache path
+    - npx cypress cache list
+    - $(npm bin)/print-env CI
+    - npm run cy:verify
+    - npm run cy:info
 
 test:
   image: cypress/base:10
