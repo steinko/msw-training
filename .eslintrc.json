@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "cypress",
+     "react",
+     "jest"
+  ],
+  "extends": [
+    "plugin:cypress/recommended",
+     "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/react-in-jsx-scope":"off"
+  }
+}
