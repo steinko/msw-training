@@ -16,5 +16,5 @@ test:
   stage: acceptance-test
   script:
     - npm i
-    - npm start
+    - npm start&
     - npm run cypress:run
