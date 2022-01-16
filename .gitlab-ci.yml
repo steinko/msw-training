@@ -15,5 +15,5 @@ test:
   image: cypress/base:10
   stage: acceptance-test
   script:
-    - nom i
+    - npm i
     - npm run cypress:run
