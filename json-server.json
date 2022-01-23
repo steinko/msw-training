@@ -1,5 +1,0 @@
-{
-  "port": 5000,
-  "read-only": true,
-  "routes": "routes.json"
-}

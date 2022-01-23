@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  msw-backend:
+   image: steinko/msw-backend
+  msw-frontend:
+    image: steinko/msw-frontend
+    depends_on: 
+      - msw-backend
+  cypress:
+    image: "cypress/included:4.4.0"
+    depends_on:
+      - msw-frontend
+    environment:
+      - CYPRESS_baseUrl=http://msw-frontend:3000
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e

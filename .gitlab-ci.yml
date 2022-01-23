@@ -1,57 +1,30 @@
 stages:
   - continuose-intgeration
-  - build
+  - build-image
+  - prpvide-infrastructure
   - acceptance-test
 
-variables:
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+build-backend-image:
+   stage: build-image
+   image: docker:dind
+   services:
+    - docker:dind
+   script:
+    - cd backedn
+    - docker build -t steinko/msw-backend
+    - docker push steinko/msw-backend
+    - cd ..
 
-# cache using branch name
-# https://gitlab.com/help/ci/caching/index.md
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .npm
-    - cache/Cypress
-    - node_modules
-
-  
-
-integration-test:
-  stage: continuose-intgeration
-  image: node  
-  script:
+provide-infrastructure-test:
+   image: pulumi/pulumi-nodejs
+   stage: test-infrastructure-provision
+   script:
+    - cd deploy
     - npm install
-    - npm run test -- --coverage --watchAll=false
-    - npm run eslint
-
-install:
-  image: cypress/base:10
-  stage: build
-
-  script:
-    - npm ci
-    # show where the Cypress test runner binaries are cached
-    - $(npm bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-
-
-test:
-  image: cypress/base:10
-  stage: acceptance-test
-  script:
-     - $(npm bin)/cypress run
-
-  artifacts:
-    when: always
-    paths:
-      - cypress/videos
-      - cypress/screenshots
-    expire_in: 1 day
-    reports:
-      junit:
-        - results/TEST-*.xml
+    - export PULUMI_ACCESS_TOKEN="$PULUMI_ACCESS_TOKEN"
+    - pulumi login
+    - pulumi stack select dev
+    - pulumi up -y
+    - BACKEND_URL=http://$(pulumi stack output backendUrl)/helloworld >> test.env
+    - cd ..
 
