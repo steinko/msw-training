@@ -12,7 +12,7 @@ build-backend-image:
    script:
     - cd backend
     - docker build -t steinko/msw-backend
-    - docker push steinko/msw-backend
+    - docker push steinko/msw-backend .
     - cd ..
 
 provide-infrastructure-test:
