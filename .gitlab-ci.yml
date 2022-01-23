@@ -12,6 +12,7 @@ build-backend-image:
    script:
     - cd backend
     - docker build -t steinko/msw-backend .
+    - docker login -u steinko --password "$DOCKER_PASSWORD"  
     - docker push steinko/msw-backend
     - cd ..
 
