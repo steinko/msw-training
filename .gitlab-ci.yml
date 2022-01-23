@@ -10,7 +10,7 @@ build-backend-image:
    services:
     - docker:dind
    script:
-    - cd backedn
+    - cd backend
     - docker build -t steinko/msw-backend
     - docker push steinko/msw-backend
     - cd ..
