@@ -17,7 +17,7 @@ build-backend-image:
 
 provide-infrastructure-test:
    image: pulumi/pulumi-nodejs
-   stage: test-infrastructure-provision
+   stage: provide-infrastructure
    script:
     - cd deploy
     - npm install
